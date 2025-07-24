@@ -1,1 +1,16 @@
-spring.application.name=aprendendo-spring-boot-com-java
+spring:
+  application:
+    name: aprendendo-spring-boot-com-java
+  datasource:
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/aprendendo_spring_boot_com_java?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: admin123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+    show-sql: false
+
+    open-in-view: false
