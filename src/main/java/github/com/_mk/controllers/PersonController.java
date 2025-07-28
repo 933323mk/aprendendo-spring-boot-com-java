@@ -8,10 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/person/v1")
+
 public class PersonController {
 
     @Autowired
@@ -40,9 +42,18 @@ public class PersonController {
 
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonDTO findById(@PathVariable("id") Long id){
+    public PersonDTO findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
+
+
+//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public PersonDTO findById(@PathVariable("id") Long id){
+//        var person = service.findById(id);
+//        person.setBirthDay(new Date());
+//
+//        return person;
+//    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonDTO> findAll(){
