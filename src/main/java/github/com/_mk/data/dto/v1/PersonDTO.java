@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import github.com._mk.serializer.GenderSerializer;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"/*, "birthDay"*/})
-public class PersonDTO implements Serializable {
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
