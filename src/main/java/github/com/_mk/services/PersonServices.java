@@ -2,7 +2,7 @@ package github.com._mk.services;
 
 import github.com._mk.controllers.PersonController;
 import github.com._mk.data.dto.v1.PersonDTO;
-import github.com._mk.data.dto.v2.PersonDTOV2;
+//import github.com._mk.data.dto.v2.PersonDTOV2;
 import github.com._mk.exception.RequiredObjectIsNullException;
 import github.com._mk.exception.ResourceNotFoundException;
 import static github.com._mk.mapper.ObjectMapper.parseObject;
@@ -10,7 +10,7 @@ import static github.com._mk.mapper.ObjectMapper.parseListObjects;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import github.com._mk.mapper.custom.PersonMapper;
+//import github.com._mk.mapper.custom.PersonMapper;
 import github.com._mk.model.Person;
 import github.com._mk.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -29,8 +29,8 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
-    @Autowired
-    PersonMapper converter;
+    //@Autowired
+    //PersonMapper converter;
 
     public PersonDTO create(PersonDTO person) {
         if(person == null) throw new RequiredObjectIsNullException();
@@ -42,13 +42,13 @@ public class PersonServices {
         return dto;
     }
 
-    public PersonDTOV2 createV2(PersonDTOV2 person) {
-        if(person == null) throw new RequiredObjectIsNullException();
-        logger.info("CREATING ONE PERSON V2!");
-        var entity = converter.convertDTOToEntity(person);
-
-        return converter.convertEntityToDTO(repository.save(entity));
-    }
+//    public PersonDTOV2 createV2(PersonDTOV2 person) {
+//        if(person == null) throw new RequiredObjectIsNullException();
+//        logger.info("CREATING ONE PERSON V2!");
+//        var entity = converter.convertDTOToEntity(person);
+//
+//        return converter.convertEntityToDTO(repository.save(entity));
+//    }
 
     public PersonDTO update(PersonDTO person) {
         if(person == null) throw new RequiredObjectIsNullException();
