@@ -5,7 +5,7 @@ spring:
     driver-class-name:  com.mysql.cj.jdbc.Driver
     url:  jdbc:mysql://localhost:3306/aprendendo_spring_boot_com_java?useTimezone=true&serverTimezone=UTC
     username: root
-    password: admin123
+    password: 5tgb6yhn
   jpa:
     hibernate:
       ddl-auto: none

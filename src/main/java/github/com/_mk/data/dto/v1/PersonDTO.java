@@ -102,7 +102,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
 //        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getBirthDay(), getGender());
 //    }
 
-        @Override
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof PersonDTO person)) return false;
         return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());

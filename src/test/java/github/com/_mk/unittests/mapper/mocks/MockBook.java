@@ -10,13 +10,9 @@ import java.util.List;
 public class MockBook {
 
 
-    public Book mockEntity() {
-        return mockEntity(0);
-    }
+    public Book mockEntity() {return mockEntity(0);}
 
-    public BookDTO mockDTO() {
-        return mockDTO(0);
-    }
+    public BookDTO mockDTO() {return mockDTO(0);}
 
     public List<Book> mockEntityList() {
         List<Book> books = new ArrayList<>();

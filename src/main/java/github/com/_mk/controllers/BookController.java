@@ -17,7 +17,11 @@ import java.util.List;
 public class BookController implements BookControllerDocs {
 
     @Autowired
-    private BookServices services;
+    private final BookServices services;
+
+    public BookController(BookServices services) {
+        this.services = services;
+    }
 
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,

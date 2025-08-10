@@ -19,7 +19,11 @@ import java.util.List;
 public class PersonController implements PersonControllerDocs {
 
     @Autowired
-    private PersonServices service;
+    private final PersonServices service;
+
+    public PersonController(PersonServices service) {
+        this.service = service;
+    }
 
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,
