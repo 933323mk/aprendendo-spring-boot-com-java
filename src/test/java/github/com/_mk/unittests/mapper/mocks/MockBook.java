@@ -1,21 +1,25 @@
 package github.com._mk.unittests.mapper.mocks;
 
-import github.com._mk.data.dto.v1.BookDTO;
-import github.com._mk.model.Book;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import github.com._mk.data.dto.BookDTO;
+import github.com._mk.model.Book;
+
 public class MockBook {
 
 
-    public Book mockEntity() {return mockEntity(0);}
-
-    public BookDTO mockDTO() {return mockDTO(0);}
-
+    public Book mockEntity() {
+        return mockEntity(0);
+    }
+    
+    public BookDTO mockDTO() {
+        return mockDTO(0);
+    }
+    
     public List<Book> mockEntityList() {
-        List<Book> books = new ArrayList<>();
+        List<Book> books = new ArrayList<Book>();
         for (int i = 0; i < 14; i++) {
             books.add(mockEntity(i));
         }
@@ -29,24 +33,25 @@ public class MockBook {
         }
         return books;
     }
-
+    
     public Book mockEntity(Integer number) {
         Book book = new Book();
         book.setId(number.longValue());
-        book.setAuthor("Author Test" + number);
-        book.setLaunch_date(new Date());
+        book.setAuthor("Some Author" + number);
+        book.setLaunchDate(new Date());
         book.setPrice(25D);
-        book.setTitle("Title Test" + number);
+        book.setTitle("Some Title" + number);
         return book;
     }
 
     public BookDTO mockDTO(Integer number) {
         BookDTO book = new BookDTO();
         book.setId(number.longValue());
-        book.setAuthor("Author Test" + number);
-        book.setLaunch_date(new Date());
+        book.setAuthor("Some Author" + number);
+        book.setLaunchDate(new Date());
         book.setPrice(25D);
-        book.setTitle("Title Test" + number);
+        book.setTitle("Some Title" + number);
         return book;
     }
+
 }

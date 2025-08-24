@@ -1,35 +1,22 @@
-package github.com._mk.model;
+package github.com._mk.data.dto;
 
-import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity
-@Table(name = "books")
-public class Book implements Serializable {
+public class BookDTO extends RepresentationModel<BookDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, length = 180)
     private String author;
-
-    @Column(name = "launch_date", nullable = false)
-    @Temporal(TemporalType.DATE)
     private Date launchDate;
-
-    @Column(nullable = false)
     private Double price;
-
-    @Column(nullable = false, length = 250)
     private String title;
 
-    public Book() {}
+    public BookDTO() {}
 
     public Long getId() {
         return id;
@@ -74,7 +61,7 @@ public class Book implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
+        BookDTO book = (BookDTO) o;
         return Objects.equals(getId(), book.getId()) && Objects.equals(getAuthor(), book.getAuthor()) && Objects.equals(getLaunchDate(), book.getLaunchDate()) && Objects.equals(getPrice(), book.getPrice()) && Objects.equals(getTitle(), book.getTitle());
     }
 

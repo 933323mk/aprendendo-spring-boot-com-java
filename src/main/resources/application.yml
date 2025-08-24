@@ -1,25 +1,26 @@
+cors:
+  originPatterns: http://localhost:8080,http://localhost:3000,https://www.erudio.com.br
 spring:
   application:
-    name: aprendendo-spring-boot-com-java
+    name: rest-with-spring-boot-and-java-erudio
   datasource:
-    driver-class-name:  com.mysql.cj.jdbc.Driver
-    url:  jdbc:mysql://localhost:3306/aprendendo_spring_boot_com_java?useTimezone=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
     username: root
-    password: 5tgb6yhn
+    password: admin123
   jpa:
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
     show-sql: false
-
     open-in-view: false
-
 logging:
   level:
-    #root: WARN
-    github.com._mk: DEBUG
+    root: INFO
+    # root: WARN
+    # br.com.erudio: DEBUG
 spring-doc:
   paths-to-match: /api/**/v1/**
   swagger-ui:
-    use-root-path:  true
+    use-root-path: true

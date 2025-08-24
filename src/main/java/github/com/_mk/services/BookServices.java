@@ -1,7 +1,7 @@
 package github.com._mk.services;
 
 import github.com._mk.controllers.BookController;
-import github.com._mk.data.dto.v1.BookDTO;
+import github.com._mk.data.dto.BookDTO;
 import github.com._mk.exception.RequiredObjectIsNullException;
 import github.com._mk.exception.ResourceNotFoundException;
 import github.com._mk.model.Book;
@@ -18,86 +18,78 @@ import static github.com._mk.mapper.ObjectMapper.parseObject;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
 @Service
 public class BookServices {
 
-    private final Logger logger = LoggerFactory.getLogger(BookServices.class.getName());
+    private Logger logger = LoggerFactory.getLogger(BookServices.class.getName());
 
     @Autowired
     BookRepository repository;
 
-    //@Autowired
-    //BookMapper converter;
 
-    public BookDTO create(BookDTO Book) {
-        if(Book == null) throw new RequiredObjectIsNullException();
+    public List<BookDTO> findAll() {
 
-        logger.info("CREATING ONE Book!");
-        var entity = parseObject(Book, Book.class);
-        var dto = parseObject(repository.save(entity), BookDTO.class);
-        linksHateoas(dto);
+        logger.info("Finding all Book!");
+
+        var books = parseListObjects(repository.findAll(), BookDTO.class);
+        books.forEach(this::addHateoasLinks);
+        return books;
+    }
+
+    public BookDTO findById(Long id) {
+        logger.info("Finding one Book!");
+
+        var entity = repository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var dto =  parseObject(entity, BookDTO.class);
+        addHateoasLinks(dto);
         return dto;
     }
 
-//    public BookDTOV2 createV2(BookDTOV2 Book) {
-//        if(Book == null) throw new RequiredObjectIsNullException();
-//        logger.info("CREATING ONE Book V2!");
-//        var entity = converter.convertDTOToEntity(Book);
-//
-//        return converter.convertEntityToDTO(repository.save(entity));
-//    }
+    public BookDTO create(BookDTO book) {
 
-    public BookDTO update(BookDTO Book) {
-        if(Book == null) throw new RequiredObjectIsNullException();
-        logger.info("UPDATING ONE Book!");
-        Book entity = repository.findById(Book.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("NOT RECORDS FOUND FOR THIS ID"));
+        if (book == null) throw new RequiredObjectIsNullException();
 
-        entity.setAuthor(Book.getAuthor());
-        entity.setLaunch_date(Book.getLaunch_date());
-        entity.setPrice(Book.getPrice());
-        entity.setId(Book.getId());
-        entity.setTitle(Book.getTitle());
+        logger.info("Creating one Book!");
+        var entity = parseObject(book, Book.class);
 
         var dto = parseObject(repository.save(entity), BookDTO.class);
-        linksHateoas(dto);
+        addHateoasLinks(dto);
+        return dto;
+    }
+
+    public BookDTO update(BookDTO book) {
+
+        if (book == null) throw new RequiredObjectIsNullException();
+
+        logger.info("Updating one Book!");
+        Book entity = repository.findById(book.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+        entity.setAuthor(book.getAuthor());
+        entity.setLaunchDate(book.getLaunchDate());
+        entity.setPrice(book.getPrice());
+        entity.setTitle(book.getTitle());
+
+        var dto = parseObject(repository.save(entity), BookDTO.class);
+        addHateoasLinks(dto);
         return dto;
     }
 
     public void delete(Long id) {
-        logger.info("DELETING ONE Book!");
+
+        logger.info("Deleting one Book!");
 
         Book entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("NOT RECORDS FOUND FOR THIS ID"));
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
         repository.delete(entity);
     }
 
-    public List<BookDTO> findAll() {
-        logger.info("FINDING ALL books!");
-
-        var Books = parseListObjects(repository.findAll(), BookDTO.class);
-        Books.forEach(this::linksHateoas);
-        return Books;
-    }
-
-    public BookDTO findById(Long id) {
-        logger.info("FINDING ONE Book!");
-
-        var entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("NOT RECORDS FOUND FOR THIS ID"));
-        var dto = parseObject(entity, BookDTO.class);
-        linksHateoas(dto);
-        return dto;
-
-    }
-
-    private void linksHateoas(BookDTO dto) {
-        dto.add(linkTo(methodOn(BookController.class).findById(dto.getId())).withRel("findById").withType("GET"));
-        dto.add(linkTo(methodOn(BookController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
+    private void addHateoasLinks(BookDTO dto) {
+        dto.add(linkTo(methodOn(BookController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(BookController.class).findAll()).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(BookController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(BookController.class).update(dto)).withRel("update").withType("PUT"));
-        dto.add(linkTo(methodOn(BookController.class).findAll()).withRel("findAll").withType("GET"));
-
+        dto.add(linkTo(methodOn(BookController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 }

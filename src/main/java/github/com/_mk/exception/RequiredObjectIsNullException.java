@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class RequiredObjectIsNullException extends RuntimeException {
+
     public RequiredObjectIsNullException() {
-        super("NÃO É PERMITIDO PERSISTIR UM OBJETO NULO!");
+        super("It is not allowed to persist a null object!");
     }
+
     public RequiredObjectIsNullException(String message) {
         super(message);
     }
