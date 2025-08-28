@@ -1,8 +1,11 @@
 package github.com._mk.integrationtests.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement
 public class PersonDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -12,6 +15,8 @@ public class PersonDTO implements Serializable {
     private String lastName;
     private String address;
     private String gender;
+    private boolean enabled;
+
 
     public PersonDTO() {}
 
@@ -55,14 +60,23 @@ public class PersonDTO implements Serializable {
         this.gender = gender;
     }
 
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PersonDTO person)) return false;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonDTO personDTO = (PersonDTO) o;
+        return enabled == personDTO.enabled && Objects.equals(id, personDTO.id) && Objects.equals(firstName, personDTO.firstName) && Objects.equals(lastName, personDTO.lastName) && Objects.equals(address, personDTO.address) && Objects.equals(gender, personDTO.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(id, firstName, lastName, address, gender, enabled);
     }
 }
